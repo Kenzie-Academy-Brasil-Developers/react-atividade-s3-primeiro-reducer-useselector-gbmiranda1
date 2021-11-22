@@ -1,15 +1,23 @@
-import { useSelector } from "react-redux";
+import { useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { addFruit } from "../../Store/modules/fruits/actions";
 
-function FruitsPage(){
-	//acessando o estado global e pegando o state fruits
+function FruitsPage() {
+  const [fruit, setFruit] = useState("");
+  const dispatch = useDispatch();
   const fruits = useSelector((state) => state.fruits);
 
+  const handleAddFruit = () => dispatch(addFruit(fruit));
+
   return (
-      <ul>
-        {fruits.map((fruit) => (
-          <li key={fruit}> {fruit} </li>
-        ))}
-      </ul>
+    <div>
+      <input onChange={(e) => setFruit(e.target.value)} />
+      <button onClick={handleAddFruit}>Adicionar fruta</button>
+
+      {fruits.map((fruit) => (
+        <p key={fruit}> {fruit} </p>
+      ))}
+    </div>
   );
 }
 
